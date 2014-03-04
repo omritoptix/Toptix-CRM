@@ -1,0 +1,132 @@
+﻿@model Toptix.Models.Order
+
+@{
+    ViewBag.Title = "Edit Order";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create") | </li>
+         <li>@Html.ActionLink("Delete", "Delete", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Edit Order</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Order</legend>
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.ClientID)
+        @Html.HiddenFor(model => model.EnumCalculationTypeId)
+        @Html.HiddenFor(model => model.EnumChargeFrequencyID)
+        @Html.HiddenFor(model => model.NetPrice)
+        @Html.HiddenFor(model => model.SupportCalculatedValue)
+        @Html.HiddenFor(model => model.SupportDiscountValue)
+        @Html.HiddenFor(model => model.SupportFirstChargeDate)
+        @Html.HiddenFor(model => model.SupportNetPriceToCharge)
+        @Html.HiddenFor(model => model.SupportPriceToCharge)
+
+        <br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ClientID, "Client")
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Client.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnumChargeFrequencyID, "Charge Frequency")
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.EnumChargeFrequency.Description)
+        </div>      
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OrderDate)
+        </div>
+        <div class="editor-field">
+            @Html.JQueryUI().DatepickerFor(model => model.OrderDate)
+        </div>
+
+                <div class="editor-label">
+            @Html.LabelFor(model => model.NetPrice)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.NetPrice)
+        </div>
+
+         <div class="editor-label">
+            @Html.LabelFor(model => model.SupportPriceToCharge)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.SupportPriceToCharge)
+        </div>
+
+        <div class="editor-label">
+           @Html.Label("Current Support Discount")
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.SupportDiscountValue)
+        </div>
+
+         <div class="editor-label">
+            @Html.LabelFor(model => model.SupportNetPriceToCharge)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.SupportNetPriceToCharge)
+        </div>
+
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SupportFirstChargeDate)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.SupportFirstChargeDate)
+        </div>
+
+
+         <div class="editor-label">
+            @Html.LabelFor(model => model.PayConditionID, "Pay Condition")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PayConditionID", String.Empty)
+            @Html.ValidationMessageFor(model => model.PayConditionID)
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Discount Type")
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.EnumCalculationTypeId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SupportDiscountValue)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.SupportDiscountValue)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

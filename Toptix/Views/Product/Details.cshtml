@@ -1,0 +1,36 @@
+﻿@model Toptix.Models.Product
+
+@{
+    ViewBag.Title = "Product Details";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create") | </li>
+         <li>@Html.ActionLink("Delete", "Delete", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Edit", "Edit", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Product Details</h2>
+
+<fieldset>
+    <legend>Product</legend>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Name): </span>
+        <span class="item">@Html.DisplayFor(model => model.Name)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.ProductType.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.ProductType.Description)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Version): </span>
+        <span class="item">@Html.DisplayFor(model => model.Version)</span>
+    </div>
+</fieldset>

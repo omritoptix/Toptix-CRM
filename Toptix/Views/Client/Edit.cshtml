@@ -1,0 +1,170 @@
+﻿@model Toptix.Models.Client
+
+@{
+    ViewBag.Title = "Edit Client";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create") | </li>
+         <li>@Html.ActionLink("Delete", "Delete", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Edit Client</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Client</legend>
+
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DistributorID, "Distributor")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DistributorID", String.Empty)
+            @Html.ValidationMessageFor(model => model.DistributorID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ActivityTypeID, "ActivityType")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ActivityTypeID", String.Empty)
+            @Html.ValidationMessageFor(model => model.ActivityTypeID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.City)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.City)
+            @Html.ValidationMessageFor(model => model.City)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CountryID, "Country")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CountryID", String.Empty)
+            @Html.ValidationMessageFor(model => model.CountryID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContactName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContactName)
+            @Html.ValidationMessageFor(model => model.ContactName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContactPhone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContactPhone)
+            @Html.ValidationMessageFor(model => model.ContactPhone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.isThereLisenceForSite)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.isThereLisenceForSite)
+            @Html.ValidationMessageFor(model => model.isThereLisenceForSite)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.JoiningDate)
+        </div>
+        <div class="editor-field">
+            @Html.JQueryUI().DatepickerFor(model => model.JoiningDate)
+            @Html.ValidationMessageFor(model => model.JoiningDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContactMail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContactMail)
+            @Html.ValidationMessageFor(model => model.ContactMail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PayTypeID, "PayType")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PayTypeID", String.Empty)
+            @Html.ValidationMessageFor(model => model.PayTypeID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CurrencyID, "Currency")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CurrencyID", String.Empty)
+            @Html.ValidationMessageFor(model => model.CurrencyID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LisenceValidTill)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LisenceValidTill)
+            @Html.ValidationMessageFor(model => model.LisenceValidTill)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LisenceNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LisenceNumber)
+            @Html.ValidationMessageFor(model => model.LisenceNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

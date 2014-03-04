@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Toptix.Models.GlobalParameters>
+
+@{
+    ViewBag.Title = "Global Parameters";
+}
+@foreach (var item in Model) {
+    
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Edit", "Edit", new { id=item.ID })</li>
+    </ul>
+}
+
+<h2>Global Parameters</h2>
+
+<fieldset>
+    <legend>Country</legend>
+
+    <div class="display-label">
+         <span class="label">Number of days for charges alert: </span>
+        <span class="item right">@Html.DisplayFor(modelItem => item.AlertRangeInDays)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.EmailNotificationAddress): </span>
+        <span class="item right">@Html.DisplayFor(modelItem => item.EmailNotificationAddress)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">Number of month ahead to create new charges: </span>
+        <span class="item right">@Html.DisplayFor(modelItem => item.CreateNewChargesPeriod)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">System Currency: </span>
+        <span class="item right">@Html.DisplayFor(modelItem => item.Currency.FullDescription)</span>
+    </div>
+</fieldset>
+}

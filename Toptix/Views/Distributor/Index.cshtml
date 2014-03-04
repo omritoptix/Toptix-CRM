@@ -1,0 +1,159 @@
+﻿@model PagedList.IPagedList<Toptix.Models.Distributor>
+
+@{
+    ViewBag.Title = "Distributers";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create")</li>
+    </ul>
+}
+
+@using PagedList.Mvc; 
+@using PagedList;
+
+
+<h2>Distributors</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        Find By Name: @Html.TextBox("SearchString",ViewBag.CurrentFilter as string)  
+        <input type="submit" value="Search" /></p>
+}
+
+<table>
+    <tr>
+        <th colspan="8" style="text-align:center">
+            Distirbuter Details
+        </th>
+        <th colspan="4" style="text-align:center">
+            Fees & Currency
+        </th>
+    </tr>
+    <tr>
+        <th>
+             @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.IDSortParam }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+             @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm }, new { style = "text-decoration:underline" })
+        </th>
+        
+        <th>
+            Address
+        </th>
+        <th>
+            Country
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Mail
+        </th>
+        <th>
+            Contact Details
+        </th>
+        <th>
+            Subsidiary
+        </th>
+        <th>
+            Support
+        </th>
+        <th>
+            Lisence
+        </th>
+        <th>
+            Services
+        </th>
+        <th>
+            Currency
+        </th>
+        <th>
+            
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.ActionLink(item.Name, "Details", new { id=item.ID })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address), @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactName), @Html.DisplayFor(modelItem => item.ContactPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isPartOfSubsidiary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupportFee)
+            @if ((item.SupportFee) != null){@Html.Raw("%");}
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LisenceFee)
+            @if ((item.LisenceFee) != null) {@Html.Raw("%");}
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProffesionalServicesFee)
+            @if ((item.ProffesionalServicesFee) != null) {@Html.Raw("%");}
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Currency.FullDescription)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new {style=" background: url(../Images/x.png) no-repeat; display: block;width: 12px;height: 12px;"})
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+
+<div style="text-align:center">
+    <b>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount</b><br />
+     
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink("<Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:<<
+        @Html.Raw(" ");
+        @:< Prev
+    }
+     
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next>", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink(">>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:Next >
+        @Html.Raw(" ")
+        @:>>
+    }
+</div>
+

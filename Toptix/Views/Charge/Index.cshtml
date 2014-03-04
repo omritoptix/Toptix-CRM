@@ -1,0 +1,131 @@
+﻿@model PagedList.IPagedList<Toptix.Models.Charge>
+
+@{
+    ViewBag.Title = "Charges";
+}
+
+
+<h2>Charges</h2>
+
+@using PagedList.Mvc; 
+@using PagedList;
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create")</li>
+    </ul>
+}
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find By Client Name: @Html.TextBox("SearchString",ViewBag.CurrentFilter as string)  
+        <input type="submit" value="Search" /></p>
+}
+
+
+<table>
+    <tr>
+        <th>
+         @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.IDSortParam }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+         @Html.ActionLink("Client", "Index", new { sortOrder = ViewBag.ClientSortParm }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+            @Html.ActionLink("Charge Date", "Index", new { sortOrder = ViewBag.DateSortParm }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+            @Html.DisplayName("ChargeValue")
+        </th>
+        <th>
+            @Html.DisplayName("Order Number")
+        </th>
+        <th>
+            @Html.DisplayName("Is Alert?")
+        </th>
+        <th>
+            @Html.DisplayName("Is Paid?")
+        </th>
+         <th>
+            @Html.DisplayName("Is Invoice?")
+        </th>
+        <th>
+           @Html.DisplayName("Is Valid?")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+         <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.Client.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChargeDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChargeValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAlert)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsPaid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsInvoice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsValid)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+
+<div style="text-align:center">
+    <b>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount</b><br />
+     
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink("<Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:<<
+        @Html.Raw(" ");
+        @:< Prev
+    }
+     
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next>", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink(">>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:Next >
+        @Html.Raw(" ")
+        @:>>
+    }
+</div>
+
+
+

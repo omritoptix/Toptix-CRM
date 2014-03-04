@@ -1,0 +1,38 @@
+﻿@model Toptix.Models.Currency
+
+@{
+    ViewBag.Title = "Create Currency";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Create Currency</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Currency</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

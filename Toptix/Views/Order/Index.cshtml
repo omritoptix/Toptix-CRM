@@ -1,0 +1,135 @@
+﻿@model PagedList.IPagedList<Toptix.Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+@using PagedList.Mvc; 
+@using PagedList;
+
+
+@section tools {
+    <ul class="sub">
+        <li>@Html.ActionLink("Create New", "SalePhase1")</li>
+    </ul>
+}
+<h2>Orders</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find By Client Name: @Html.TextBox("SearchString",ViewBag.CurrentFilter as string)  
+        <input type="submit" value="Search" /></p>
+}
+
+<table>
+    <tr>
+        <th>
+         @Html.ActionLink("Order Number", "Index", new { sortOrder = ViewBag.OrderIDSortParm }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+         @Html.ActionLink("Client", "Index", new { sortOrder = ViewBag.ClientSortParm }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+            @Html.DisplayName("Charge Frequency")
+        </th>
+        <th>
+            Pay Type
+        </th>
+        <th>
+            @Html.DisplayName("Order Date")
+        </th>
+        <th>
+            @Html.DisplayName("Net Price")
+        </th>
+        <th>
+            @Html.DisplayName("Support Discount Value")
+        </th>
+        <th>
+            @Html.DisplayName("Support Net Price To Charge")
+        </th>
+        <th>
+            @Html.DisplayName("Support First Charge Date")
+        </th>
+        <th>
+            @Html.DisplayName("Status")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+             @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.ActionLink(item.Client.Name, "Details", new { id=item.ID })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnumChargeFrequency.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayCondition.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NetPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupportDiscountValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupportNetPriceToCharge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupportFirstChargeDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new {style=" background: url(../Images/x.png) no-repeat; display: block;width: 12px;height: 12px;"})
+        </td>
+        <td>
+            @Html.ActionLink("Charges", "IndexFromOrderScreen", new { Controller = "Charge", id = item.ID})
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+
+<div style="text-align:center">
+    <b>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount</b><br />
+     
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink("<Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:<<
+        @Html.Raw(" ");
+        @:< Prev
+    }
+     
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next>", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink(">>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:Next >
+        @Html.Raw(" ")
+        @:>>
+    }
+</div>
+
+

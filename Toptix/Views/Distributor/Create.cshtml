@@ -1,0 +1,135 @@
+﻿@model Toptix.Models.Distributor
+
+@{
+    ViewBag.Title = "New Distributer";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>New Distributer</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Distributor</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.isPartOfSubsidiary)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.isPartOfSubsidiary)
+            @Html.ValidationMessageFor(model => model.isPartOfSubsidiary)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.City)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.City)
+            @Html.ValidationMessageFor(model => model.City)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CountryID, "Country")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CountryID", String.Empty)
+            @Html.ValidationMessageFor(model => model.CountryID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Mail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Mail)
+            @Html.ValidationMessageFor(model => model.Mail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContactName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContactName)
+            @Html.ValidationMessageFor(model => model.ContactName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContactPhone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContactPhone)
+            @Html.ValidationMessageFor(model => model.ContactPhone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SupportFee)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SupportFee)
+            @Html.ValidationMessageFor(model => model.SupportFee)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LisenceFee)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LisenceFee)
+            @Html.ValidationMessageFor(model => model.LisenceFee)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProffesionalServicesFee)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ProffesionalServicesFee)
+            @Html.ValidationMessageFor(model => model.ProffesionalServicesFee)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CurrencyID, "Currency")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CurrencyID", String.Empty)
+            @Html.ValidationMessageFor(model => model.CurrencyID)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

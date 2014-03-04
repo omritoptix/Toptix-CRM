@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Toptix.Models.Currency>
+
+@{
+    ViewBag.Title = "Currency";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create")</li>
+    </ul>
+}
+<h2>Currency</h2>
+
+<table>
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Currency
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(ModelItem => item.ID)
+        </td>
+        <td>
+            @Html.ActionLink(item.Description, "Details", new { id=item.ID })
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new {style=" background: url(../Images/x.png) no-repeat; display: block;width: 12px;height: 12px;"})
+        </td>
+    </tr>
+}
+
+</table>

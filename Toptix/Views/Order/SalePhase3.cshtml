@@ -1,0 +1,185 @@
+﻿
+<script src="~/Scripts/knockout-2.1.0.js"></script>
+<script src="~/Scripts/jquery-1.7.2.min.js"></script>
+<script src="~/Scripts/knockout.validation.js"></script>
+<script src="../../Scripts/jquery-1.7.2.min.js"></script>
+<script src="../../Scripts/jquery-ui-1.9.2.min.js"></script>
+<link href="../../Content/themes/base/jquery-ui.css" rel="stylesheet" />
+
+<!----------------------------------------------View-------------------------------------------->
+
+<h2>Sale Phase 3 - Support Charges</h2>
+<form>
+    <div class="order-service">
+        <h3>Monthly payments</h3>
+        <div>Total amount of support products: <span data-bind="text:partOfServicePrice"></span></div>
+        <div>Support rate:<div class="border"><input data-bind="value: SupportCalculatedValue" /></div></div>
+        <div>Support Charge:<span data-bind="text:SupportPriceToCharge().toFixed(2) "></span></div>
+    </div>
+    <div class="order-service">
+        <h3>Discount</h3>
+        <div>Discount Type:<select data-bind="options: discountTypes, value: EnumCalculationTypeID, optionsText : 'Description', optionsValue : 'ID',optionsCaption : 'Discount Type'"></select></div>
+        <div>Discount rate/Value :<div class="border"><input data-bind="value: SupportDiscountValue" /></div></div>
+        <div>Final Support Charge:<span data-bind="text:SupportNetPriceToCharge().toFixed(2)"></span></div>
+    </div>
+    <div class="order-service">
+        <h3>Terms of Payment</h3>
+        <div>Charge Frequency :<select data-bind="options: chargeFrequency, value: EnumChargeFrequencyID, optionsText : 'Description', optionsValue : 'ID',optionsCaption : 'Charge Frequency'"></select></div>
+        <div>First Charge Date (dd/mm/yy) :<input style="width:80px;" id="datepicker" data-bind="value: SupportFirstChargeDateUnformatted"/></div>
+        @*<textarea name="SalePhase3" data-bind ="value: ko.toJSON(orderPhase3Observable)"></textarea>*@
+    </div>
+</form>
+
+<form action="/Order/SalePhase3" method="post">
+    <input type="hidden" name="orderPhase3Json" data-bind="value: ko.toJSON(orderPhase3Observable)" />
+    @* <textarea name="SalePhase3" data-bind ="text: errors.showAllMessages()"></textarea>
+    <textarea name="SalePhase3" data-bind ="text: errors().length"></textarea>*@
+    <button type="submit" data-bind= "enable : errors().length == 0">Finish</button>
+</form>
+
+
+<!------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+<script type="text/javascript">
+
+    ko.validation.init({
+        errorMessageClass: 'validationMessage',
+        grouping: { deep: true }
+    });
+
+    // custom validation ruels
+    ko.validation.rules['percentageValid'] = {
+        validator: function (val) {
+            if ((val > 100) || (val < 0)) return false;
+            return true;
+        },
+        message: 'Percentage must be between 0-100'
+    };
+
+    ko.validation.rules['nominalValid'] = {
+        validator: function (val) {
+            if (val > 0) return false;
+            return true;
+        },
+        message: 'Nominal discount can not be greater then total price'
+    };
+
+    
+
+    ko.validation.registerExtenders();
+
+
+
+   //  ------------------ViewModel------------------------------------------//
+    function orderPhase3ViewModel(partOfServicePrice) {
+         
+        var self = this;
+
+
+        self.discountTypes = ko.observableArray([]);
+        self.chargeFrequency = ko.observableArray([]);
+        self.partOfServicePrice = ko.observable(partOfServicePrice);
+        self.SupportCalculatedValue = ko.observable().extend({
+            validatable : true,
+            required: true,
+            number: true,
+            min: 0,
+            max: 100
+        });
+        self.EnumCalculationTypeID = ko.observable().extend({
+            required : true});
+        self.EnumChargeFrequencyID = ko.observable().extend({
+            required : true});
+        self.SupportDiscountValue = ko.observable().extend({
+            validatable : true,
+            required: true,
+            number: true,
+            min: 0,
+            //validate percentage value is valid
+            percentageValid: {
+                onlyIf: function () {
+                    return (self.EnumCalculationTypeID() == "2");
+                }
+
+            },
+            //validate nominal discount is valid
+            nominalValid: {
+                onlyIf: function () {
+                    if ((self.EnumCalculationTypeID() == "1") &&
+                        ((self.SupportPriceToCharge() < self.SupportDiscountValue())))
+                        return true;
+                    return false;
+                }
+
+            }
+        });
+        self.SupportFirstChargeDateUnformatted = ko.observable().extend({
+            validatable: true,
+            required : true,
+            //formattedDate : {
+            //    format : 'dmy',
+            //    delimiter : '/'
+            //}
+             });
+            
+             self.SupportPriceToCharge = ko.computed(function () {
+                 var total = 0;
+                 if (self.SupportCalculatedValue() > 0)
+                    return total = (self.partOfServicePrice() * self.SupportCalculatedValue())/100;
+                return total;
+            });
+
+             self.SupportNetPriceToCharge = ko.computed(function () {
+                var total = 0;
+                if ((self.EnumCalculationTypeID() == "1") &&
+                             ((self.SupportPriceToCharge() > self.SupportDiscountValue()))) {
+                    total = self.SupportPriceToCharge() - self.SupportDiscountValue();
+                    return total;
+                }
+                    if (self.EnumCalculationTypeID() == "2") {
+                        total = (self.SupportPriceToCharge() * (100 - self.SupportDiscountValue())) / 100;
+                        return total;
+                    }
+                    return 0;
+                
+            });
+
+
+        //Load chargeFrequency
+        $.getJSON("/Order/ChargeFrequency", function (data) {
+            $.each(data, function (i) {
+                self.chargeFrequency.push(data[i]);
+            });
+        });
+
+       //Load discounts
+        $.getJSON("/Order/Discounts", function (data) {
+            $.each(data, function (i) {
+                self.discountTypes.push(data[i]);
+            });
+        });
+
+    }
+       
+         var partOfServicePrice = @ViewBag.partOfServicePrice
+         orderPhase3Observable = new orderPhase3ViewModel(partOfServicePrice);
+         var errors = ko.validation.group(orderPhase3Observable, { observable: true });
+         ko.applyBindings(orderPhase3Observable);
+
+         $("#datepicker").datepicker({
+             changeMonth: true,
+             changeYear: true,
+             yearRange: '-100:+100'
+         });
+         $("#datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
+         $("#datepicker").attr('readOnly', 'true');
+
+
+</script>
+
+
+

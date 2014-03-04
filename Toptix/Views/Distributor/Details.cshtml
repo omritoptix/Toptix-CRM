@@ -1,0 +1,86 @@
+﻿@model Toptix.Models.Distributor
+
+@{
+    ViewBag.Title = "Distributer Details";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create") | </li>
+         <li>@Html.ActionLink("Delete", "Delete", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Edit", "Edit", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Distributer Details</h2>
+
+<fieldset>
+    <legend>Distributor</legend>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Name): </span>
+        <span class="item">@Html.DisplayFor(model => model.Name)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.isPartOfSubsidiary): </span>
+        <span class="item">@Html.DisplayFor(model => model.isPartOfSubsidiary)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Address): </span>
+        <span class="item">@Html.DisplayFor(model => model.Address)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.City): </span>
+        <span class="item">@Html.DisplayFor(model => model.City)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Country.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.Country.Description)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Phone): </span>
+        <span class="item">@Html.DisplayFor(model => model.Phone)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Mail): </span>
+        <span class="item">@Html.DisplayFor(model => model.Mail)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.ContactName): </span>
+        <span class="item">@Html.DisplayFor(model => model.ContactName)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.ContactPhone): </span>
+        <span class="item">@Html.DisplayFor(model => model.ContactPhone)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.SupportFee): </span>
+        <span class="item">@Html.DisplayFor(model => model.SupportFee)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.LisenceFee): </span>
+        <span class="item">@Html.DisplayFor(model => model.LisenceFee)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.ProffesionalServicesFee): </span>
+        <span class="item">@Html.DisplayFor(model => model.ProffesionalServicesFee)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Currency.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.Currency.FullDescription)</span>
+    </div>
+</fieldset>

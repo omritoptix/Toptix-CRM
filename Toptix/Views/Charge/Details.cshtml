@@ -1,0 +1,54 @@
+﻿@model Toptix.Models.Charge
+
+@{
+    ViewBag.Title = "Charges Details";
+}
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Edit", "Edit", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Charges Details</h2>
+
+<fieldset>
+    <legend>Charge</legend>
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.ChargeDate): </span>
+        <span class="item"> @Html.DisplayFor(model => model.ChargeDate)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.ChargeValue): </span>
+        <span class="item"> @Html.DisplayFor(model => model.ChargeValue)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Client.Name): </span>
+        <span class="item">@Html.DisplayFor(model => model.Client.Name)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.Order.ID): </span>
+        <span class="item">@Html.DisplayFor(model => model.Order.ID)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.IsAlert): </span>
+        <span class="item">@Html.DisplayFor(model => model.IsAlert)</span>
+    </div>
+    <div class="display-label">
+        <span class="label">@Html.DisplayNameFor(model => model.IsPaid): </span>
+        <span class="item">@Html.DisplayFor(model => model.IsPaid)</span>
+    </div>
+
+    <div class="display-label">
+    <span class="label">@Html.DisplayNameFor(model => model.IsInvoice): </span>
+    <span class="item">@Html.DisplayFor(model => model.IsInvoice)</span>
+</div>
+
+
+    <div class="display-label">
+    <span class="label">@Html.DisplayNameFor(model => model.IsValid): </span>
+    <span class="item">@Html.DisplayFor(model => model.IsValid)</span>
+</div>
+</fieldset>
+

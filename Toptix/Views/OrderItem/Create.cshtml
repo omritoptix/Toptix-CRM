@@ -1,0 +1,89 @@
+﻿@model Toptix.Models.OrderItem
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    
+@*@using (Ajax.BeginForm("Create","OrderItem", new AjaxOptions {
+                    HttpMethod = "Post" }))
+                                    
+                    {                
+        *@<fieldset>
+        <legend>OrderItem</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductID, "Product")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ProductID", String.Empty)
+            @Html.ValidationMessageFor(model => model.ProductID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Quantity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Quantity)
+            @Html.ValidationMessageFor(model => model.Quantity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Price)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPartOfService)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsPartOfService)
+            @Html.ValidationMessageFor(model => model.IsPartOfService)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnumCalculationTypeID, "EnumCalculationType")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("EnumCalculationTypeID", String.Empty)
+            @Html.ValidationMessageFor(model => model.EnumCalculationTypeID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Discount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Discount)
+            @Html.ValidationMessageFor(model => model.Discount)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NetPrice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NetPrice)
+            @Html.ValidationMessageFor(model => model.NetPrice)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

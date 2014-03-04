@@ -1,0 +1,36 @@
+﻿@model Toptix.Models.ConversionRate
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ConversionRate</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Currency.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Currency.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ConversionValue)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ConversionValue)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Date)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Date)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

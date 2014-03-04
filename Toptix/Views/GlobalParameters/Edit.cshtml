@@ -1,0 +1,61 @@
+﻿@model Toptix.Models.GlobalParameters
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>GlobalParameters</legend>
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.CurrencyID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AlertRangeInDays)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AlertRangeInDays)
+            @Html.ValidationMessageFor(model => model.AlertRangeInDays)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmailNotificationAddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmailNotificationAddress)
+            @Html.ValidationMessageFor(model => model.EmailNotificationAddress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateNewChargesPeriod)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreateNewChargesPeriod)
+            @Html.ValidationMessageFor(model => model.CreateNewChargesPeriod)
+        </div>
+
+@*        <div class="editor-label">
+            @Html.LabelFor(model => model.CurrencyID, "Currency")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CurrencyID", String.Empty)
+            @Html.ValidationMessageFor(model => model.CurrencyID)
+        </div>*@
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

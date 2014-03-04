@@ -1,0 +1,29 @@
+﻿@model Toptix.Models.PayCondition
+
+@{
+    ViewBag.Title = "Delete Pay Condition";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+<h2>Delete Pay Condition</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>PayConditions</legend>
+
+    <div class="display-label">
+         <span class="label">@Html.DisplayNameFor(model => model.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.Description)</span>
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

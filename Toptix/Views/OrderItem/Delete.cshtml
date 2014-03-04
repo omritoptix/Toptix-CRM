@@ -1,0 +1,68 @@
+﻿@model Toptix.Models.OrderItem
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>OrderItem</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Product.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Product.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Quantity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Quantity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Price)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Price)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsPartOfService)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsPartOfService)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EnumCalculationType.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EnumCalculationType.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Discount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Discount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NetPrice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NetPrice)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

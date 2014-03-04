@@ -1,0 +1,155 @@
+﻿@model PagedList.IPagedList<Toptix.Models.Client>
+
+@{
+    ViewBag.Title = "Clients";
+}
+
+
+@section tools {
+    <ul class="sub">
+        <li>@Html.ActionLink("Create New", "Create")</li>
+    </ul>
+}
+
+@using PagedList.Mvc; 
+@using PagedList;
+
+
+<h2>Clients</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        Find By Name: @Html.TextBox("SearchString",ViewBag.CurrentFilter as string)  
+        <input type="submit" value="Search" /></p>
+}
+
+<table>
+    <tr>
+        <th>
+             @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.IDSortParam }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+             @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+            @Html.ActionLink("Distributor", "Index", new { sortOrder = ViewBag.DistributorSortParm },new { style = "text-decoration:underline" })
+        </th>
+        <th>
+            @Html.DisplayName("Address")
+        </th>
+        <th>
+            @Html.DisplayName("Phone")
+        </th>
+        <th>
+            @Html.DisplayName("Contact Name")
+        </th>
+        <th>
+            @Html.DisplayName("Contact Phone")
+        </th>
+        <th>
+            Site Lisence
+        <th>
+            @Html.DisplayName("Joining Date")
+        </th>
+        <th>
+            Pay Type
+        </th>
+        <th>
+            Currency
+        </th>
+        <th>
+            Lisence Exp.
+        </th>
+        <th>
+            @Html.DisplayName("Lisence Number")
+        </th>
+        <th>
+            @Html.DisplayName("Status")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.ActionLink(item.Name, "Details", new { id=item.ID })
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.Distributor.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.Country.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isThereLisenceForSite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JoiningDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayType.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Currency.FullDescription) 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LisenceValidTill)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LisenceNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new {style=" background: url(../Images/x.png) no-repeat; display: block;width: 12px;height: 12px;"})
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+
+<div style="text-align:center">
+   <b>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount</b><br />
+     
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink("<Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:<<
+        @Html.Raw(" ");
+        @:< Prev
+    }
+     
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next>", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink(">>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:Next >
+        @Html.Raw(" ")
+        @:>>
+    }
+</div>
+

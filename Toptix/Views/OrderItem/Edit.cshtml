@@ -1,0 +1,94 @@
+﻿@model Toptix.Models.OrderItem
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>OrderItem</legend>
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.Quantity)
+        @Html.HiddenFor(model => model.Price)
+        @Html.HiddenFor(model => model.IsPartOfService)
+        @Html.HiddenFor(model => model.EnumCalculationTypeID)
+        @Html.HiddenFor(model => model.Discount)
+        @Html.HiddenFor(model => model.NetPrice)
+        @Html.HiddenFor(model => model.CurrencyID)
+        @Html.HiddenFor(model => model.OrderID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductID, "Product")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ProductID", String.Empty)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Quantity)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Quantity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Price)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Price)
+        </div>
+
+         <div class="editor-label">
+            Currency
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Currency.FullDescription)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPartOfService)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.IsPartOfService)
+        </div>
+
+        <div class="editor-label">
+            Calculation Type
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.EnumCalculationTypeID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Discount)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Discount)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NetPrice)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.NetPrice)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

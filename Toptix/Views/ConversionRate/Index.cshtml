@@ -1,0 +1,98 @@
+﻿@model PagedList.IPagedList<Toptix.Models.ConversionRate>
+
+@{
+    ViewBag.Title = "Conversion Rates";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create")</li>
+    </ul>
+}
+
+@using PagedList.Mvc; 
+@using PagedList;
+
+
+<h2>Conversion Rates</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        Find By Currency: @Html.TextBox("SearchString",ViewBag.CurrentFilter as string)  
+        <input type="submit" value="Search" /></p>
+}
+
+<table>
+    <tr>
+        <th>
+             @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.IDSortParam }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+             @Html.ActionLink("Currency", "Index", new { sortOrder = ViewBag.NameSortParm }, new { style = "text-decoration:underline" })
+        </th>
+        <th>
+            Conversion Rate
+        </th>
+        <th>
+            Date
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Currency.FullDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConversionValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+
+<div style="text-align:center">
+    <b>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount</b><br />
+     
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink("<Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:<<
+        @Html.Raw(" ");
+        @:< Prev
+    }
+     
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next>", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink(">>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:Next >
+        @Html.Raw(" ")
+        @:>>
+    }
+</div>

@@ -1,0 +1,191 @@
+﻿
+<script src="~/Scripts/knockout.all-2.2.5.min.js"></script>
+<script src="~/Scripts/knockout-2.1.0.js"></script>
+<script src="~/Scripts/jquery-1.7.2.min.js"></script>
+<script src="~/Scripts/knockout.validation.js"></script>
+
+<!----------------------------------------------View-------------------------------------------->
+<h2>Please Add Items to the Order</h2>
+<table class="order-table">
+    <thead data-bind= "visible: orderItems().length > 0"><tr>
+        <th>Product Name</th><th>Quantity</th><th>Price</th><th>Currency</th><th>Is Part of service</th><th>Calculation Type</th><th>Discount</th><th>Net Price</th><th></th>
+    </tr></thead>
+    <!-- Todo: Generate table body -->
+    <tbody data-bind="foreach: orderItems">
+    <tr>
+        <td><select data-bind="options: $root.products, value: ProductID, optionsText : 'Name', optionsValue : 'ID'"></select></td>
+        <td><input data-bind="value: quantity" /></td>
+        <td><input data-bind="value: price" /></td>
+        <td><select data-bind="options: $root.currencies, value: currencyID, optionsText :function(item) { 
+                       return item.Description +' ' + item.Country 
+                   }, optionsValue : 'ID'"></select></td>
+        <td><input type="checkbox" data-bind="checked: isPartOfService" /></td>
+        <td><select data-bind="options: $root.discountTypes, value: EnumCalculationTypeID, optionsText :'Description', optionsValue : 'ID'"></select></td>
+        <td><input data-bind="value: discount" /></td>
+        <td data-bind="text:netPrice().toFixed(2) ,visible : netPrice() >= 0"></td>
+        <td><a href="#" data-bind="click: $root.removeOrderItem">Remove</a></td>
+    </tr>    
+</tbody>
+</table>
+<h3 data-bind="visible: $root.totalNetPrice() > 0">
+    Total Net Price Before Conversion: <span data-bind="text: $root.totalNetPrice().toFixed(2)"></span>
+</h3>
+
+<button data-bind="click: addOrderItem, enable : errors().length == 0"">Add Order Item</button>
+
+<form action="/Order/SalePhase2" method="post">
+    <input type="hidden" name="orderItems" data-bind="value: ko.toJSON(orderItems)" />
+    @* <textarea name="orderItems" data-bind ="value: ko.toJSON(orderItems)"></textarea>*@
+    <button type="submit" data-bind= "visible: orderItems().length > 0, enable : errors().length == 0">Next</button>
+</form>
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------>
+<script type="text/javascript">
+
+    ko.validation.init({
+        errorMessageClass: 'validationMessage',
+        grouping: { deep: true }
+    });
+
+    // custom validation rules
+    ko.validation.rules['percentageValid'] = {
+        validator: function (val) {
+            if ((val > 100) || (val < 0)) return false;
+            return true;
+        },
+        message: 'Percentage must be between 0-100'
+    };
+
+    ko.validation.rules['nominalValid'] = {
+        validator: function (val) {
+            if (val > 0) return false;
+            return true;
+        },
+        message: 'Nominal discount can not be greater then total price'
+    };
+
+    ko.validation.registerExtenders();
+
+    //order item class
+    function orderItem(ProductID, quantity, price, isPartOfService, EnumCalculationTypeID, discount, netPrice,currency) {
+        var self = this;
+        self.ProductID = ko.observable(ProductID);
+        self.quantity = ko.observable(quantity).extend({
+            required: true,
+            number: true,
+            min: 0,
+        });
+        self.price = ko.observable(price).extend({
+            required: true,
+            number: true,
+            min: 0,
+        });
+        self.currencyID = ko.observable(currency);
+        self.isPartOfService = ko.observable(isPartOfService);
+        self.EnumCalculationTypeID = ko.observable(EnumCalculationTypeID);
+        self.discount = ko.observable(discount).extend({
+            required: true,
+            number: true,
+            min: 0,
+            //validate percentage value is valid
+            percentageValid: {
+                onlyIf: function () {
+                    return (self.EnumCalculationTypeID() == "2");
+                }
+                
+            },
+            //validate nominal discount is valid
+            nominalValid: {
+                onlyIf: function () {
+                    if ((self.EnumCalculationTypeID() == "1") &&
+                        ((self.price() * self.quantity() < self.discount())))
+                        return true;
+                    return false;
+            }
+                
+            }
+        });
+        //compute net price
+        self.netPrice =  ko.computed(function () {
+            var total = 0;
+            if (self.EnumCalculationTypeID() == "2") {
+
+                total = (self.quantity() * self.price())* ((100-self.discount())/100);
+                return total;
+            }
+            if (self.EnumCalculationTypeID() == "1") {
+                total = (self.quantity() * self.price()) - self.discount();
+                return total;
+            }
+            return total;
+        });
+    }
+
+
+
+
+
+    // ------------------ViewModel------------------------------------------//
+         function orderItemViewModel () {
+         
+            var self = this;
+
+            self.orderItems = ko.observableArray([]).extend({validatable : true});
+            self.products = ko.observableArray([]);
+            self.discountTypes = ko.observableArray([]);
+            self.currencies = ko.observableArray([]);
+                         self.addOrderItem = function () {
+                self.orderItems.push(new orderItem("", "", "", false, "", "", "","@ViewBag.defaultCurrency"));
+            }
+            self.errors = ko.validation.group( self.orderItems(), {deep: true} );
+            
+
+            self.removeOrderItem = function (orderItem) { self.orderItems.remove(orderItem) }
+
+            self.totalNetPrice = ko.computed(function () {
+                var total = 0;
+                for (var i = 0; i < self.orderItems().length; i++)
+                    total += self.orderItems()[i].netPrice();
+                return total;
+            });
+
+        //Load products
+        $.getJSON("/Order/Products", function (data) {
+            $.each(data, function (i) {
+                self.products.push(data[i]);
+            });
+        });
+
+       //Load discounts
+        $.getJSON("/Order/Discounts", function (data) {
+            $.each(data, function (i) {
+                self.discountTypes.push(data[i]);
+            });
+        });
+
+        //Load Currencies
+        $.getJSON("/Order/Currencies", function (data) {
+            $.each(data, function (i) {
+                self.currencies.push(data[i]);
+            });
+        });
+         }
+
+
+         
+    
+         ko.applyBindings(new orderItemViewModel());
+
+
+</script>

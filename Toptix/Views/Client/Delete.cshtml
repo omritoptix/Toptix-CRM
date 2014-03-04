@@ -1,0 +1,110 @@
+﻿@model Toptix.Models.Client
+
+@{
+    ViewBag.Title = "Delete Client";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Delete Client</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Client</legend>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Name): </span>
+        <span class="item">@Html.DisplayFor(model => model.Name)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Distributor.Name): </span>
+        <span class="item">@Html.DisplayFor(model => model.Distributor.Name)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.ActivityType.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.ActivityType.Description)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Address): </span>
+        <span class="item">@Html.DisplayFor(model => model.Address)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.City): </span>
+        <span class="item">@Html.DisplayFor(model => model.City)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Country.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.Country.Description)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Phone): </span>
+        <span class="item">@Html.DisplayFor(model => model.Phone)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.ContactName): </span>
+        <span class="item">@Html.DisplayFor(model => model.ContactName)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.ContactPhone): </span>
+        <span class="item">@Html.DisplayFor(model => model.ContactPhone)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.isThereLisenceForSite): </span>
+        <span class="item">@Html.DisplayFor(model => model.isThereLisenceForSite)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.JoiningDate): </span>
+        <span class="item">@Html.DisplayFor(model => model.JoiningDate)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.ContactMail): </span>
+        <span class="item">@Html.DisplayFor(model => model.ContactMail)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.PayType.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.PayType.Description)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Currency.FullDescription): </span>
+        <span class="item">@Html.DisplayFor(model => model.Currency.Description)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.LisenceValidTill): </span>
+        <span class="item">@Html.DisplayFor(model => model.LisenceValidTill)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.LisenceNumber): </span>
+        <span class="item">@Html.DisplayFor(model => model.LisenceNumber)</span>
+    </div>
+
+    <div class="display-label">
+        <span class="label"> @Html.DisplayNameFor(model => model.Status): </span>
+        <span class="item">@Html.DisplayFor(model => model.Status)</span>
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

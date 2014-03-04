@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Toptix.Models.Charge>
+
+@{
+    ViewBag.Title = "Charges For The Order";
+}
+
+
+<h2>Charges For The Order</h2>
+
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChargeDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChargeValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Client.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAlert)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsPaid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsInvoice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsValid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChargeDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChargeValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Client.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAlert)
+        </td>
+        <td>
+             @Html.DisplayFor(modelItem => item.IsPaid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsInvoice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsValid)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+<h2>
+@Html.ActionLink("Back To Orders","Index","Order")
+</h2>

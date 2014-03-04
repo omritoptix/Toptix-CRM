@@ -1,0 +1,25 @@
+﻿@model Toptix.Models.PayType
+
+@{
+    ViewBag.Title = "Pay Type Details";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Create New", "Create") | </li>
+         <li>@Html.ActionLink("Delete", "Delete", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Edit", "Edit", new { id=Model.ID }) | </li>
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+<h2>Pay Type Details</h2>
+
+<fieldset>
+    <legend>PayType</legend>
+
+    <div class="display-label">
+         <span class="label">@Html.DisplayNameFor(model => model.Description): </span>
+        <span class="item">@Html.DisplayFor(model => model.Description)</span>
+    </div>
+</fieldset>

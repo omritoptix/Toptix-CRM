@@ -1,0 +1,125 @@
+﻿@model PagedList.IPagedList<Toptix.Models.OrderItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Order Items</h2>
+
+@using PagedList.Mvc; 
+@using PagedList;
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find By Order Number: @Html.TextBox("SearchString",ViewBag.CurrentFilter as string)  
+        <input type="submit" value="Search" /></p>
+}
+
+
+<table>
+    <tr>
+        <th>
+            @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.IDSortParam }, new { style = "text-decoration:underline" })</th>
+        <th>
+            @Html.ActionLink("Order Number", "Index", new { sortOrder = ViewBag.OrderSortParm }, new { style = "text-decoration:underline" })</th>
+        </th>
+        <th>
+            @Html.DisplayName("Product Name")
+        </th>
+        <th>
+            @Html.DisplayName("Quantity")
+        </th>
+        <th>
+            @Html.DisplayName("Price")
+        </th>
+        <th>
+            Currency
+        </th>
+        <th>
+            @Html.DisplayName("Is Part Of Service")
+        </th>
+        <th>
+            @Html.DisplayName("Calculation Type")
+        </th>
+        <th>
+            @Html.DisplayName("Discount")
+        </th>
+        <th>
+            @Html.DisplayName("NetPrice")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Currency.FullDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsPartOfService)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnumCalculationType.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NetPrice)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+
+<div style="text-align:center">
+    <b>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount</b><br />
+     
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink("<Prev", "Index", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:<<
+        @Html.Raw(" ");
+        @:< Prev
+    }
+     
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next>", "Index", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+        @Html.Raw(" ");
+        @Html.ActionLink(">>", "Index", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })
+    }
+    else
+    {
+        @:Next >
+        @Html.Raw(" ")
+        @:>>
+    }
+</div>

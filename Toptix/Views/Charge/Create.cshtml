@@ -1,0 +1,86 @@
+﻿@model Toptix.Models.Charge
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Charge</legend>
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ChargeDate)
+        </div>
+        <div class="editor-field">
+            @Html.JQueryUI().DatepickerFor(model => model.ChargeDate)
+            @Html.ValidationMessageFor(model => model.ChargeDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ChargeValue)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ChargeValue)
+            @Html.ValidationMessageFor(model => model.ChargeValue)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OrderID, "Order")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("OrderID", String.Empty)
+            @Html.ValidationMessageFor(model => model.OrderID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsAlert)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsAlert)
+            @Html.ValidationMessageFor(model => model.IsAlert)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPaid)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsPaid)
+            @Html.ValidationMessageFor(model => model.IsPaid)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsInvoice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsInvoice)
+            @Html.ValidationMessageFor(model => model.IsInvoice)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsValid)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsValid)
+            @Html.ValidationMessageFor(model => model.IsValid)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

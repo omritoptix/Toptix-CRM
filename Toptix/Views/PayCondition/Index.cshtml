@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Toptix.Models.PayCondition>
+
+@{
+    ViewBag.Title = "Pay Conditions";
+}
+
+
+@section tools {
+    <ul class="sub">
+        <li>@Html.ActionLink("Create New", "Create")</li>
+    </ul>
+}
+<h2>Pay Conditions</h2>
+
+<table>
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+         <td>
+            @Html.DisplayFor(ModelItem => item.ID)
+        </td>
+        <td>
+            @Html.ActionLink(item.Description, "Details", new { id=item.ID })
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new {style=" background: url(../Images/x.png) no-repeat; display: block;width: 12px;height: 12px;"})
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "An Error Has Occured";
+}
+
+<h2> Oops! An error has occured</h2>
+
+<h3 style="color:red">>Error Message : @ViewBag.errorMessage</h3>
+
+<h3 >Please Make sure All parameters are valid. incase the problem persistes, contact the system administrator</h3>
+
+<h3>@Html.ActionLink("Back to Screen", "CustomErrorFilter", new { routeFrom = @ViewBag.route })</h3>
+
+
+
+

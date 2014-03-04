@@ -1,0 +1,58 @@
+﻿@model Toptix.Models.Order
+
+@{
+    ViewBag.Title = "Create Order";
+}
+
+
+@section tools {
+    <ul class="sub">
+         <li>@Html.ActionLink("Back to List", "Index")</li>
+    </ul>
+}
+
+<h2>Create Order</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Order</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ClientID, "Client")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ClientID", String.Empty)
+            @Html.ValidationMessageFor(model => model.ClientID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PayConditionID, "PayCondition")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PayConditionID", String.Empty)
+            @Html.ValidationMessageFor(model => model.PayConditionID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OrderDate)
+        </div>
+        <div class="editor-field">
+            @Html.JQueryUI().DatepickerFor(model => model.OrderDate)
+            @Html.ValidationMessageFor(model => model.OrderDate)
+        </div>
+
+        <p>
+            <input type="submit" value="Next" />
+        </p>
+    </fieldset>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
